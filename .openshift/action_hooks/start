@@ -1,0 +1,22 @@
+#!/bin/bash
+# The logic to start up your application should be put in this
+# script. The application will work only if it binds to
+# $OPENSHIFT_DIY_IP:8080
+export JAVA_VERSION="1.8.0_66"
+
+export JDK_FILENAME="jdk-8u66-linux-x64.tar.gz"
+export JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u66-b17/$JDK_FILENAME"
+
+export SBT="$OPENSHIFT_DATA_DIR/sbt-launch.jar"
+export SBT_URL="https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar"
+export SBT_OPTS="-Xmx384M -Xss1M -XX:+CMSClassUnloadingEnabled"
+
+if [ ! -f $OPENSHIFT_DATA_DIR/jdk/jdk$JAVA_VERSION ]; then
+  cd $OPENSHIFT_DATA_DIR && wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JDK_URL && tar -zxf $JDK_FILENAME
+fi
+
+if [ ! -f $OPENSHIFT_DATA_DIR/sbt-launch.jar ]; then
+  cd $OPENSHIFT_DATA_DIR && wget --no-check-certificate $SBT_URL
+fi
+
+cd $OPENSHIFT_REPO_DIR/app && export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk/jdk$JAVA_VERSION && export PATH=$OPENSHIFT_DATA_DIR/jdk$JAVA_VERSION/bin:$PATH && nohup java $SBT_OPTS -jar $SBT run |& /usr/bin/logshifter -tag diy &
