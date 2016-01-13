@@ -11,7 +11,7 @@ export SBT="$OPENSHIFT_DATA_DIR/sbt-launch.jar"
 export SBT_URL="https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar"
 export SBT_OPTS="-Xms384M -Xmx1408M -Xss1M -XX:+CMSClassUnloadingEnabled"
 
-if [ ! -d $OPENSHIFT_DATA_DIR/jdk/jdk$JAVA_VERSION ]; then
+if [ ! -d $OPENSHIFT_DATA_DIR/jdk$JAVA_VERSION ]; then
   wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JDK_URL && tar -zxf $JDK_FILENAME && rm $JDK_FILENAME
 fi
 
@@ -19,4 +19,4 @@ if [ ! -f $OPENSHIFT_DATA_DIR/sbt-launch.jar ]; then
   wget --no-check-certificate $SBT_URL
 fi
 
-cd $OPENSHIFT_REPO_DIR && export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk/jdk$JAVA_VERSION && export PATH=$OPENSHIFT_DATA_DIR/jdk$JAVA_VERSION/bin:$PATH && nohup java -Duser.home=$OPENSHIFT_DATA_DIR $SBT_OPTS -jar $SBT run |& /usr/bin/logshifter -tag sbt-app &
+cd $OPENSHIFT_REPO_DIR && export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk$JAVA_VERSION && export PATH=$OPENSHIFT_DATA_DIR/jdk$JAVA_VERSION/bin:$PATH && nohup java -Duser.home=$OPENSHIFT_DATA_DIR $SBT_OPTS -jar $SBT run |& /usr/bin/logshifter -tag sbt-app &
