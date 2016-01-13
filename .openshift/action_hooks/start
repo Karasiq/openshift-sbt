@@ -11,12 +11,11 @@ export SBT="$OPENSHIFT_DATA_DIR/sbt-launch.jar"
 export SBT_URL="https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar"
 export SBT_OPTS="-Xms384M -Xmx1408M -Xss1M -XX:+CMSClassUnloadingEnabled"
 
-cd $OPENSHIFT_DATA_DIR
-if [ ! -d jdk/jdk$JAVA_VERSION ]; then
+if [ ! -d $OPENSHIFT_DATA_DIR/jdk/jdk$JAVA_VERSION ]; then
   wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JDK_URL && tar -zxf $JDK_FILENAME && rm $JDK_FILENAME
 fi
 
-if [ ! -f sbt-launch.jar ]; then
+if [ ! -f $OPENSHIFT_DATA_DIR/sbt-launch.jar ]; then
   wget --no-check-certificate $SBT_URL
 fi
 
