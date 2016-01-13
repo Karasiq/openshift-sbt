@@ -9,7 +9,7 @@ export JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u66-b17/$JDK_FILENA
 
 export SBT="$OPENSHIFT_DATA_DIR/sbt-launch.jar"
 export SBT_URL="https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar"
-export SBT_OPTS="-Xmx384M -Xss1M -XX:+CMSClassUnloadingEnabled"
+export SBT_OPTS="-Xms384M -Xmx1408M -Xss1M -XX:+CMSClassUnloadingEnabled"
 
 cd $OPENSHIFT_DATA_DIR
 if [ ! -f $JDK_FILENAME ]; then
